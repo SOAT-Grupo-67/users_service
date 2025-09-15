@@ -13,6 +13,7 @@ describe("FindUserUseCase", () => {
     name: "John Doe",
     email: "john@example.com",
     cpf: "12345678900",
+    password: "123456",
   };
 
   beforeEach(() => {
@@ -26,7 +27,8 @@ describe("FindUserUseCase", () => {
 
       const result = await findUserUseCase.findUser(1);
 
-      expect(result).toEqual(mockUser);
+      const { password, ...userWithoutPassword } = mockUser;
+      expect(result).toEqual(userWithoutPassword);
       expect(mockRepository.findOne).toHaveBeenCalledWith(1);
     });
 

@@ -14,7 +14,7 @@ export class GetUsersUseCase implements GetUsersUseCaseInterface {
     try {
       const users = await this.repository.findMany();
 
-      return users;
+      return users.map(({ password, ...user }) => user);
     } catch (error) {
       throw new CustomError("Erro ao listar usuários.", 500);
     }

@@ -1,5 +1,5 @@
-import { User } from "../../models/User";
+import { UserWithoutPassword } from "../../models/User";
 
 export interface FindUserUseCaseInterface {
-  findUser(id: number): Promise<User | undefined>;
+  findUser(id: number): Promise<UserWithoutPassword | undefined>;
 }

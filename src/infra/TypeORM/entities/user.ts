@@ -21,6 +21,9 @@ export class UserEntity {
   @Column("varchar", { nullable: true })
   email: string;
 
+  @Column("varchar", { nullable: true })
+  password: string;
+
   @CreateDateColumn({ name: "created_at" })
   createdAt: Date;
 

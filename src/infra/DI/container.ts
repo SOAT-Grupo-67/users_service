@@ -12,6 +12,8 @@ import { UpdateUserUseCaseInterface } from "../../useCases/updateUser/updateUser
 import { UpdateUserUseCase } from "../../useCases/updateUser";
 import { DeleteUserUseCaseInterface } from "../../useCases/deleteUser/deleteUser.interface";
 import { DeleteUserUseCase } from "../../useCases/deleteUser";
+import { ILoginUseCase } from "../../useCases/login/login.interface";
+import { LoginUseCase } from "../../useCases/login";
 
 const container = new Container();
 
@@ -28,5 +30,6 @@ container
 container
   .bind<DeleteUserUseCaseInterface>("DeleteUserUseCase")
   .to(DeleteUserUseCase);
+container.bind<ILoginUseCase>("LoginUseCase").to(LoginUseCase);
 
 export { container };

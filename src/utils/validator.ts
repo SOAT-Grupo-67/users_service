@@ -19,6 +19,9 @@ export const CreateUserValidator = {
       email: z.email({
         error: "Email inválido",
       }),
+      password: z.string({
+        error: "Senha é obrigatória",
+      }),
     });
 
     return schema.parse(input);

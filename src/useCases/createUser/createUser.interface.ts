@@ -1,6 +1,6 @@
 import { CreateUserRequestDTO } from "../../dtos/createUser.dto";
-import { User } from "../../models/User";
+import { UserWithoutPassword } from "../../models/User";
 
 export interface CreateUserUseCaseInterface {
-  createUser(userData: CreateUserRequestDTO): Promise<User>;
+  createUser(userData: CreateUserRequestDTO): Promise<UserWithoutPassword>;
 }

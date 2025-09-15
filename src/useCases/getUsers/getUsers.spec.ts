@@ -14,12 +14,14 @@ describe("GetUsersUseCase", () => {
       name: "John Doe",
       email: "john@example.com",
       cpf: "12345678900",
+      password: "123456",
     },
     {
       id: 2,
       name: "Jane Doe",
       email: "jane@example.com",
       cpf: "98765432100",
+      password: "123456",
     },
   ];
 
@@ -34,7 +36,8 @@ describe("GetUsersUseCase", () => {
 
       const result = await getUsersUseCase.getUsers();
 
-      expect(result).toEqual(mockUsers);
+      const expectedUsers = mockUsers.map(({ password, ...user }) => user);
+      expect(result).toEqual(expectedUsers);
       expect(mockRepository.findMany).toHaveBeenCalled();
     });
 

@@ -4,6 +4,8 @@ import { container } from "../infra/DI/container";
 import { UserController } from "../controller";
 import { ZodError } from "zod";
 import { CreateUserValidator } from "../utils/validator";
+import { authMiddleware } from "../middleware/auth";
+import { sign } from "jsonwebtoken";
 
 const router = Router();
 router.use(cors());
@@ -16,7 +18,49 @@ router.get("/health", (_, res) => {
     .json({ status: "ok teste de log", timestamp: new Date().toISOString() });
 });
 
-router.get("/user/:id", async (req, res) => {
+router.post("/login", async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    if (!email || !password) {
+      return res
+        .status(400)
+        .json({ message: "Email e senha são obrigatórios" });
+    }
+
+    const result = await userController.login({ email, password });
+    return res.json(result);
+  } catch (error: any) {
+    if (error.isCustomError) {
+      return res.status(error.status).json({ message: error.message });
+    }
+    return res.status(500).json({ message: "Erro ao realizar login" });
+  }
+});
+
+router.post("/generate-token", async (req, res) => {
+  try {
+    const { userId, email } = req.body;
+
+    if (!userId || !email) {
+      return res
+        .status(400)
+        .json({ message: "UserId e email são obrigatórios" });
+    }
+
+    const token = sign(
+      { userId, email },
+      process.env.JWT_SECRET || "default_secret",
+      { expiresIn: "1d" }
+    );
+
+    return res.json({ token });
+  } catch (error) {
+    return res.status(500).json({ message: "Erro ao gerar token" });
+  }
+});
+
+router.get("/user/:id", authMiddleware, async (req, res) => {
   try {
     const { id } = req.params;
     const formatedId = parseInt(id, 10);
@@ -42,7 +86,7 @@ router.get("/user/:id", async (req, res) => {
   }
 });
 
-router.get("/users", async (req, res) => {
+router.get("/users", authMiddleware, async (req, res) => {
   try {
     const users = await userController.getUsers();
 
@@ -82,7 +126,7 @@ router.post("/user", async (req, res) => {
   }
 });
 
-router.patch("/user/:id", async (req, res) => {
+router.patch("/user/:id", authMiddleware, async (req, res) => {
   try {
     const body = req.body;
     const { id } = req.params;
@@ -108,7 +152,7 @@ router.patch("/user/:id", async (req, res) => {
   }
 });
 
-router.delete("/user/:id", async (req, res) => {
+router.delete("/user/:id", authMiddleware, async (req, res) => {
   try {
     const { id } = req.params;
     const formatedId = parseInt(id, 10);

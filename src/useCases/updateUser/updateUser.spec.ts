@@ -14,6 +14,7 @@ describe("UpdateUserUseCase", () => {
     name: "John Doe",
     email: "john@example.com",
     cpf: "12345678900",
+    password: "123456",
   };
 
   const mockUpdateData: Partial<CreateUserRequestDTO> = {
@@ -35,7 +36,8 @@ describe("UpdateUserUseCase", () => {
 
       const result = await updateUserUseCase.updateUser(1, mockUpdateData);
 
-      expect(result).toEqual({ ...mockUser, ...mockUpdateData });
+      const { password, ...expectedUser } = { ...mockUser, ...mockUpdateData };
+      expect(result).toEqual(expectedUser);
       expect(mockRepository.findOne).toHaveBeenCalledWith(1);
       expect(mockRepository.findByEmail).toHaveBeenCalledWith(
         mockUpdateData.email
@@ -56,7 +58,8 @@ describe("UpdateUserUseCase", () => {
         email: "new@example.com",
       });
 
-      expect(result).toEqual(sameUser);
+      const { password, ...expectedUser } = sameUser;
+      expect(result).toEqual(expectedUser);
       expect(mockRepository.findOne).toHaveBeenCalledWith(1);
       expect(mockRepository.findByEmail).toHaveBeenCalledWith(
         "new@example.com"

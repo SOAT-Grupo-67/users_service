@@ -13,6 +13,7 @@ describe("CreateUserUseCase", () => {
     name: "John Doe",
     email: "john@example.com",
     cpf: "12345678900",
+    password: "123456",
   };
 
   const mockExistingUser: User = {
@@ -32,7 +33,8 @@ describe("CreateUserUseCase", () => {
 
       const result = await createUserUseCase.createUser(mockUserData);
 
-      expect(result).toEqual({ id: 1, ...mockUserData });
+      const { password, ...expectedUser } = { id: 1, ...mockUserData };
+      expect(result).toEqual(expectedUser);
       expect(mockRepository.findByCPF).toHaveBeenCalledWith(mockUserData.cpf);
       expect(mockRepository.save).toHaveBeenCalledWith(mockUserData);
     });

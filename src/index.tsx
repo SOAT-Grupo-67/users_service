@@ -18,7 +18,7 @@ async function main() {
     app.use(routes);
 
     app.listen(port, () => {
-      console.log(`🚀 Produtos service running on port ${port}`);
+      console.log(`🚀 Users service running on port ${port}`);
     });
   } catch (error) {
     console.error("Error during application initialization:", error);

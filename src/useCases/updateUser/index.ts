@@ -31,7 +31,9 @@ export class UpdateUserUseCase implements UpdateUserUseCaseInterface {
       }
 
       const updatedUser = await this.repository.save({ id, ...userData });
-      return updatedUser;
+
+      const { password, ...userWithoutPassword } = updatedUser;
+      return userWithoutPassword;
     } catch (error) {
       if (error instanceof CustomError) {
         throw error;

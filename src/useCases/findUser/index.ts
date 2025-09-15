@@ -18,7 +18,8 @@ export class FindUserUseCase implements FindUserUseCaseInterface {
         throw new CustomError("Usuário não encontrado.", 404);
       }
 
-      return user;
+      const { password, ...userWithoutPassword } = user;
+      return userWithoutPassword;
     } catch (error) {
       if (error instanceof CustomError) {
         throw error;

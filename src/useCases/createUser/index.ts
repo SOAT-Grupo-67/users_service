@@ -27,7 +27,8 @@ export class CreateUserUseCase implements CreateUserUseCaseInterface {
       }
 
       const newUser = await this.repository.save(userData);
-      return newUser;
+      const { password, ...userWithoutPassword } = newUser;
+      return userWithoutPassword;
     } catch (error) {
       if (error instanceof CustomError) {
         throw error;

@@ -1,5 +1,5 @@
-import { User } from "../../models/User";
+import { UserWithoutPassword } from "../../models/User";
 
 export interface GetUsersUseCaseInterface {
-  getUsers(): Promise<User[]>;
+  getUsers(): Promise<UserWithoutPassword[]>;
 }
