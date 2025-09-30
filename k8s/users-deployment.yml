@@ -22,22 +22,22 @@ spec:
             - containerPort: 8080
               name: http
           env:
-            - name: Database__Host
+            - name: MYSQL_HOST
               valueFrom:
                 secretKeyRef:
                   name: users-secrets
                   key: MYSQL_HOST
-            - name: Database__Name
+            - name: MYSQL_DATABASE
               valueFrom:
                 secretKeyRef:
                   name: users-secrets
                   key: MYSQL_DATABASE
-            - name: Database__User
+            - name: MYSQL_USER
               valueFrom:
                 secretKeyRef:
                   name: users-secrets
                   key: MYSQL_USER
-            - name: Database__Password
+            - name: MYSQL_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: users-secrets
