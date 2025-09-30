@@ -26,22 +26,22 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: users-secrets
-                  key: DB_HOST
+                  key: MYSQL_HOST
             - name: Database__Name
               valueFrom:
                 secretKeyRef:
                   name: users-secrets
-                  key: DB_NAME
+                  key: MYSQL_DATABASE
             - name: Database__User
               valueFrom:
                 secretKeyRef:
                   name: users-secrets
-                  key: DB_USER
+                  key: MYSQL_USER
             - name: Database__Password
               valueFrom:
                 secretKeyRef:
                   name: users-secrets
-                  key: DB_PASSWORD
+                  key: MYSQL_PASSWORD
           resources:
             requests:
               cpu: "100m"
