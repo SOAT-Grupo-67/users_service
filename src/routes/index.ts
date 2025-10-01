@@ -18,7 +18,7 @@ router.get("/health", (_, res) => {
     .json({ status: "ok teste de log", timestamp: new Date().toISOString() });
 });
 
-router.post("/login", async (req, res) => {
+router.post("/auth/login", async (req, res) => {
   try {
     const { email, password } = req.body;
 
@@ -38,7 +38,7 @@ router.post("/login", async (req, res) => {
   }
 });
 
-router.post("/generate-token", async (req, res) => {
+router.post("/auth/generate-token", async (req, res) => {
   try {
     const { userId, email } = req.body;
 
@@ -60,7 +60,7 @@ router.post("/generate-token", async (req, res) => {
   }
 });
 
-router.get("/user/:id", authMiddleware, async (req, res) => {
+router.get("/users/:id", authMiddleware, async (req, res) => {
   try {
     const { id } = req.params;
     const formatedId = parseInt(id, 10);
@@ -104,7 +104,7 @@ router.get("/users", authMiddleware, async (req, res) => {
   }
 });
 
-router.post("/user", async (req, res) => {
+router.post("/users", async (req, res) => {
   try {
     const body = req.body;
     const validateUser = CreateUserValidator.validate(body);
@@ -126,7 +126,7 @@ router.post("/user", async (req, res) => {
   }
 });
 
-router.patch("/user/:id", authMiddleware, async (req, res) => {
+router.patch("/users/:id", authMiddleware, async (req, res) => {
   try {
     const body = req.body;
     const { id } = req.params;
@@ -152,7 +152,7 @@ router.patch("/user/:id", authMiddleware, async (req, res) => {
   }
 });
 
-router.delete("/user/:id", authMiddleware, async (req, res) => {
+router.delete("/users/:id", authMiddleware, async (req, res) => {
   try {
     const { id } = req.params;
     const formatedId = parseInt(id, 10);
