@@ -42,6 +42,11 @@ spec:
                 secretKeyRef:
                   name: users-secrets
                   key: MYSQL_PASSWORD
+            - name: JWT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: users-secrets
+                  key: SHARED_SECRET
           resources:
             requests:
               cpu: "100m"
