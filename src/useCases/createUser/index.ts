@@ -3,6 +3,7 @@ import { CreateUserRequestDTO } from "../../dtos/createUser.dto";
 import { UserRepository } from "../../repository";
 import { CustomError } from "../../utils/errors";
 import { CreateUserUseCaseInterface } from "./createUser.interface";
+import { hash } from "bcryptjs";
 
 @injectable()
 export class CreateUserUseCase implements CreateUserUseCaseInterface {
@@ -14,6 +15,9 @@ export class CreateUserUseCase implements CreateUserUseCaseInterface {
   async createUser(userData: CreateUserRequestDTO) {
     try {
       const { cpf, email } = userData;
+
+      const hashedPassword = await hash(userData.password, 10);
+      userData.password = hashedPassword;
 
       const exists = await this.repository.findByCPF(cpf);
 
